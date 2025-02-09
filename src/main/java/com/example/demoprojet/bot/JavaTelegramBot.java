@@ -1,5 +1,7 @@
 package com.example.demoprojet.bot;
 
+import com.example.demoprojet.DeepSeekRequester;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -17,10 +19,18 @@ public class JavaTelegramBot extends TelegramLongPollingBot {
     @Value("${bot.token}")
     private String token;
 
+    private final DeepSeekRequester requester;
+
+    public JavaTelegramBot(DeepSeekRequester requester) {
+        super();
+        this.requester = requester;
+    }
+
     @Override
     public void onUpdateReceived(Update update) {
         if(update.hasMessage() && update.getMessage().hasText()) {
-            String message = update.getMessage().getText().trim().substring(0,1);
+            String message = requester.askNetwork(update.getMessage().getText().trim());
+           // String message = update.getMessage().getText().trim().substring(0,1);
             String chatId = update.getMessage().getChatId().toString();
 
             SendMessage sm = new SendMessage();
