@@ -21,10 +21,12 @@ public class JavaTelegramBot extends TelegramLongPollingBot {
 
     private final DeepSeekRequester requester;
 
+
     public JavaTelegramBot(DeepSeekRequester requester) {
         super();
         this.requester = requester;
     }
+
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -33,10 +35,14 @@ public class JavaTelegramBot extends TelegramLongPollingBot {
            // String message = update.getMessage().getText().trim().substring(0,1);
             String chatId = update.getMessage().getChatId().toString();
 
+
             SendMessage sm = new SendMessage();
+            sm.enableMarkdown(true);
             sm.setChatId(chatId);
             sm.setText(message);
-
+            //SetButtons.setButtons(sm);
+            SetButtons.setInline(sm);
+            //sm.setText(message);
             try {
                 execute(sm);
             } catch (TelegramApiException e) {
@@ -44,7 +50,25 @@ public class JavaTelegramBot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         }
+        else  if(update.hasCallbackQuery()) {
+
+            String call_data = update.getCallbackQuery().getData();
+            long chat_id = update.getCallbackQuery().getMessage().getChatId();
+            String path = "https://stihi.ru/pics/2022/10/03/476.jpg";
+            SendMessage sm = new SendMessage();
+            sm.setChatId(chat_id);
+            sm.setText(path);
+            if (call_data.equals("1")) {
+                try {
+                    execute(sm);
+                } catch (TelegramApiException e) {
+
+                    e.printStackTrace();
+                }
+            }
+        }
     }
+
 
     @Override
     public String getBotUsername() {
