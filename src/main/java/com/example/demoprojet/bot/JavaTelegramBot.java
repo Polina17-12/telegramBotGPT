@@ -1,6 +1,9 @@
 package com.example.demoprojet.bot;
 
 import com.example.demoprojet.DeepSeekRequester;
+import com.example.demoprojet.db.DBInteractor;
+import com.example.demoprojet.db.DBInteractorStub;
+import com.example.demoprojet.dto.DBUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,11 +24,14 @@ public class JavaTelegramBot extends TelegramLongPollingBot {
 
     private final DeepSeekRequester requester;
 
+    private DBInteractor db;
 
-    public JavaTelegramBot(DeepSeekRequester requester) {
+    public JavaTelegramBot(DeepSeekRequester requester, DBInteractor db) {
         super();
         this.requester = requester;
+        this.db = db;
     }
+
 
 
     @Override
@@ -34,6 +40,10 @@ public class JavaTelegramBot extends TelegramLongPollingBot {
             String message = requester.askNetwork(update.getMessage().getText().trim());
            // String message = update.getMessage().getText().trim().substring(0,1);
             String chatId = update.getMessage().getChatId().toString();
+
+            DBUserInfo userInfo = new DBUserInfo();
+            db.put(userInfo);
+            System.out.println(db.getById(userInfo.getId()).getDateTime());
 
 
             SendMessage sm = new SendMessage();
