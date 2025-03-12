@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
 
-@Component
+
 public class DBInteractorStub implements DBInteractor {
     private HashMap<Long, DBUserInfo> interactors = new HashMap<>();
 
@@ -28,7 +28,7 @@ public class DBInteractorStub implements DBInteractor {
             interactors.put(u.getId(), u);
         }
         else {
-            u.setId(interactors.size()+1);
+            u.setId((long)(interactors.size()+1));
             interactors.put(u.getId(), u);
         }
         return u;

@@ -1,6 +1,6 @@
 package com.example.demoprojet.controllers;
 
-import com.example.demoprojet.entity.infoUsers;
+import com.example.demoprojet.entity.InfoUsers;
 import com.example.demoprojet.repo.UsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class UsersController {
     }
 
     @GetMapping("/user/all")
-    public List<infoUsers> allUsers() {
+    public List<InfoUsers> allUsers() {
         return userRepository.findAll();
     }
 }

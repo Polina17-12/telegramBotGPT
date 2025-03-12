@@ -37,11 +37,12 @@ public class JavaTelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if(update.hasMessage() && update.getMessage().hasText()) {
-            String message = requester.askNetwork(update.getMessage().getText().trim());
-           // String message = update.getMessage().getText().trim().substring(0,1);
+            String message = requester.askNetwork(update.getMessage().getText().trim());;
             String chatId = update.getMessage().getChatId().toString();
 
             DBUserInfo userInfo = new DBUserInfo();
+            userInfo.setText(message);
+            userInfo.setUsernameID(Long.parseLong(chatId));
             db.put(userInfo);
             System.out.println(db.getById(userInfo.getId()).getDateTime());
 

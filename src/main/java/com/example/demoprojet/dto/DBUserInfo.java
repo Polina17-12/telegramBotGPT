@@ -1,18 +1,19 @@
 package com.example.demoprojet.dto;
 
 import java.time.LocalDateTime;
+import com.example.demoprojet.entity.InfoUsers;
 
 public class DBUserInfo {
-    private int id;
-    private String usernameID;
+    private Long id;
+    private Long usernameID;
     private String text;
     private LocalDateTime dateTime;
 
-    public String getUsernameID() {
+    public Long getUsernameID() {
         return usernameID;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -24,11 +25,28 @@ public class DBUserInfo {
         this.dateTime = dateTime;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setUsernameID(Long usernameID) {
+        this.usernameID = usernameID;
+    }
+
     public String getText() {
         return text;
     }
 
     public LocalDateTime getDateTime() {
         return dateTime;
+    }
+
+    public InfoUsers toInfoUsers(){
+        InfoUsers infoUsers = new InfoUsers();
+        infoUsers.setDate(dateTime);
+        infoUsers.setId(id);
+        infoUsers.setTextUsers(text);
+        infoUsers.setUserIdInTg(usernameID);
+        return infoUsers;
     }
 }
