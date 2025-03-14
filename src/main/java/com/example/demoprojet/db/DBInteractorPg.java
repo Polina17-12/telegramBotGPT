@@ -4,6 +4,7 @@ import com.example.demoprojet.dto.DBUserInfo;
 import com.example.demoprojet.repo.UsersRepo;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,12 +12,13 @@ import java.time.ZoneOffset;
 
 
 @Service
+@Profile("prod")
 public class DBInteractorPg implements DBInteractor {
     private final UsersRepo usersRepo;
 
     @Override
-    public DBUserInfo getById(Long id) {
-        var userId = usersRepo.findByUserIdInTg(id);
+    public DBUserInfo getById(long id) {
+        var userId = usersRepo.findById(id);
         if (userId.isEmpty())
             throw new RuntimeException("");
         return userId.get().ToDBUserInfo();
@@ -32,7 +34,7 @@ public class DBInteractorPg implements DBInteractor {
             u.setDateTime(LocalDateTime.now(ZoneOffset.UTC));
         var userToInfo = u.toInfoUsers();
         usersRepo.save(userToInfo);
-        u.setUsernameID(userToInfo.getUserIdInTg());
+        u.setId(userToInfo.getId());
         return u;
     }
 }

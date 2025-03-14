@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 import com.example.demoprojet.entity.InfoUsers;
 
 public class DBUserInfo {
-    private Long id;
-    private Long usernameID;
+    private long id;
+    private long usernameID;
     private String text;
     private LocalDateTime dateTime;
 
-    public Long getUsernameID() {
+    public long getUsernameID() {
         return usernameID;
     }
 

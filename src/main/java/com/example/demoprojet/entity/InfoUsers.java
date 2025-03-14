@@ -8,33 +8,36 @@ import java.time.LocalDateTime;
 
 import java.io.Serializable;
 @Entity
-@Table(name = "users")
+@Table(name = "info_users")
 public class InfoUsers implements Serializable{
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
-        private Long id;
+        private long id;
 
-        @Column(name = "id_in_tg", unique = true)
-        private Long userIdInTg;
+        @Column(name = "id_in_tg")
+        private long userIdInTg;
 
-        @Column(name = "text_users", nullable = false)
+        @Column(name = "text_users")
         private String textUsers;
 
-        public Long getId() {
+        @Column(name = "date")
+        private LocalDateTime date;
+
+        public long getId() {
                 return id;
         }
 
-        public void setId(Long id) {
+        public void setId(long id) {
                 this.id = id;
         }
 
-        public Long getUserIdInTg() {
+        public long getUserIdInTg() {
                 return userIdInTg;
         }
 
-        public void setUserIdInTg(Long userIdInTg) {
+        public void setUserIdInTg(long userIdInTg) {
                 this.userIdInTg = userIdInTg;
         }
 
@@ -53,9 +56,6 @@ public class InfoUsers implements Serializable{
         public void setDate(LocalDateTime date) {
                 this.date = date;
         }
-
-        @Column(name = "date")
-        private LocalDateTime date;
 
         public DBUserInfo ToDBUserInfo(){
                 DBUserInfo dbUserInfo = new DBUserInfo();

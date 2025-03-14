@@ -44,7 +44,7 @@ public class JavaTelegramBot extends TelegramLongPollingBot {
             userInfo.setText(message);
             userInfo.setUsernameID(Long.parseLong(chatId));
             db.put(userInfo);
-            System.out.println(db.getById(userInfo.getId()).getDateTime());
+//            System.out.println(db.getById(userInfo.getId()).getDateTime());
 
 
             SendMessage sm = new SendMessage();

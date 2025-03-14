@@ -1,20 +1,23 @@
 package com.example.demoprojet.db;
 
 import com.example.demoprojet.dto.DBUserInfo;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
 
 
+@Service
+@Profile("dev")
 public class DBInteractorStub implements DBInteractor {
     private HashMap<Long, DBUserInfo> interactors = new HashMap<>();
 
 
 
     @Override
-    public DBUserInfo getById(Long id) {
+    public DBUserInfo getById(long id) {
         if (interactors.containsKey(id))
             return interactors.get(id);
         return null;
