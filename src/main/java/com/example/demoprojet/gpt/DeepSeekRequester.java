@@ -1,8 +1,9 @@
-package com.example.demoprojet;
+package com.example.demoprojet.gpt;
 
 import com.example.demoprojet.dto.DeepSeekResponse;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -12,8 +13,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @Component
-public class DeepSeekRequester {
+@Profile("deepseek")
+public class DeepSeekRequester implements IDeepSeek {
 
+    @Override
     public String askNetwork (String question)
     {
         HttpClient client = HttpClient.newHttpClient();

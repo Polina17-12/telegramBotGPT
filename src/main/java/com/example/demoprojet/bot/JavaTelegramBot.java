@@ -1,10 +1,9 @@
 package com.example.demoprojet.bot;
 
-import com.example.demoprojet.DeepSeekRequester;
+import com.example.demoprojet.gpt.DeepSeekRequester;
 import com.example.demoprojet.db.DBInteractor;
-import com.example.demoprojet.db.DBInteractorStub;
 import com.example.demoprojet.dto.DBUserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demoprojet.gpt.IDeepSeek;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -22,11 +21,13 @@ public class JavaTelegramBot extends TelegramLongPollingBot {
     @Value("${bot.token}")
     private String token;
 
-    private final DeepSeekRequester requester;
+    private final IDeepSeek requester;
+
 
     private DBInteractor db;
 
-    public JavaTelegramBot(DeepSeekRequester requester, DBInteractor db) {
+
+    public JavaTelegramBot(IDeepSeek requester, DBInteractor db) {
         super();
         this.requester = requester;
         this.db = db;
@@ -44,16 +45,13 @@ public class JavaTelegramBot extends TelegramLongPollingBot {
             userInfo.setText(message);
             userInfo.setUsernameID(Long.parseLong(chatId));
             db.put(userInfo);
-//            System.out.println(db.getById(userInfo.getId()).getDateTime());
-
 
             SendMessage sm = new SendMessage();
             sm.enableMarkdown(true);
             sm.setChatId(chatId);
             sm.setText(message);
-            //SetButtons.setButtons(sm);
             SetButtons.setInline(sm);
-            //sm.setText(message);
+
             try {
                 execute(sm);
             } catch (TelegramApiException e) {
